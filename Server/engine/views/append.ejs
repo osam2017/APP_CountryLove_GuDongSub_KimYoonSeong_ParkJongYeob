@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>
+		<%= title %>
+	</title>
+
+	<!-- 부트스트랩 -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/MDB Free/css/bootstrap.css">
+	<link rel="stylesheet" href="/stylesheets/MDB Free/css/mdb.css">
+	<link rel="stylesheet" href="/stylesheets/MDB Free/css/style.css">
+	
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">	</script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js'></script>
+	<script>
+	
+	var imgdir;
+	
+	$(document).ready(function(){
+		var company,detail_addr,info,detail_info,company_info,company_tel;
+		$("#submit").click(function(){
+			$("#loading").show();
+			$("#filter").show();
+				
+			company=$("#company").val();
+			detail_addr=" "+$("#detail_addr").val();
+			info=$("#info").val();
+			detail_info=$("#detail_info").val();
+			company_info=$("#company_info").val();
+			company_tel=$("#company_tel").val();
+			classification=$("#classification").val();
+			img_url=$("#thumbnail")[0].getAttribute("src");
+				 
+			$.post("./append/",
+			{
+				company: company,
+				detail_addr: detail_addr,
+				info: info,
+				detail_info: detail_info,
+				company_info: company_info,
+				company_tel: company_tel,
+				img_url: img_url,
+				classification: classification
+			}, function(data){
+				if(data==='success'){
+					$("#submit").hide();
+					$("#success").show();
+					$("#btn-upload").hide();
+				}
+				else if(data=="noaddr"){
+					alert("주소를 찾지 못했습니다.\n유효한 주소로 다시 시도해주세요.")
+				}
+				else if(data=="notall"){
+					alert("누락된 정보가 있습니다.\n정보를 모두 입력해주세요.")
+				}
+				else{
+					alert("오류가 발생하여 정보를 저장하지 못했습니다.\n정확한 정보로 다시 시도해주세요")
+				}
+					
+				$("#loading").hide();
+				$("#filter").hide();
+			});
+		});
+	});
+	
+	
+	</script>
+	<script>
+	$(function() {
+		$('#myfile').bind('change', function() {
+			$("<form action='./uploadimg/' enctype='multipart/form-data' method='post'/>")
+				.ajaxForm({
+					dataType: 'json',
+					complete: function(data) {
+						imgdir=data.responseJSON;
+						//alert(imgdir['fileurl']);
+						$("#thumbnail")[0].setAttribute("src", imgdir.fileurl);
+					}
+				})
+				.append( $(this) )
+				.submit();
+		});
+	});
+	</script>
+	<script type="text/javascript">
+		$(function () {
+			$('#btn-upload').click(function (e) {
+				e.preventDefault();
+				$('#myfile').click();
+			});
+		});
+	</script>
+</head>
+	
+<body>
+	<div class="container">
+		<div class="row">
+			<img class="center-block" style="border: 2px;" id="thumbnail" src="/images/default.png" width="200px" height="200px"></img>
+		</div>
+		<div class="row">
+			<div class="col">
+				<input type="file" id="myfile" style="display:none" name="thumbnail"/>
+				<button type="button" id="btn-upload" class="btn btn-default btn-block">Image</button>
+			</div>
+			
+			<input placeholder="업체명" type="TEXT" id="company"><br>
+			<input placeholder="상세주소" type="TEXT" id="detail_addr"><br>
+			<input placeholder="혜택간략정보" type="TEXT" id="info"><br>
+			<input placeholder="혜택상세정보" type="TEXT" id="detail_info"><br>
+			<input placeholder="업체정보" type="TEXT" id="company_info"><br>
+			<input placeholder="업체전화번호" type="TEXT" id="company_tel"><br>
+		</div>
+		<div class="row">
+			<div class="col">
+				<select id='classification' class="form-control" size="2">
+					<%- classify -%>
+				</select>
+			</div>
+			<div class="col">
+				<input type="button" id="submit" value="정보 등록" class="mybtn btn btn-default btn-block">
+				<input type="button" id="success" value="등록 성공" class="mybtn btn btn-block btn-success" style="display:none">
+			</div>
+		</div>
+	</div>
+	</div>
+	<div id="loading" style="display:none; z-index:10; position:fixed; left:0px; top:100px; width:100%; height:200px; background-image: URL(/images/loading.gif); background-repeat: no-repeat; background-position:50% 50%;"> </div>
+	<div id="filter" style="display:none; position:fixed; left:0px; top:0px; background:white; width:100%; height:100%; opacity:0.8;">
+</body>
+
+</html>

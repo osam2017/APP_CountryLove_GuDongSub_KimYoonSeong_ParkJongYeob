@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#424242"
+    tools:context="com.garena.osam.countrylove.Activity.MainActivity"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        app:srcCompat="@drawable/new0" />
+
+    <TabHost
+        android:id="@+id/tabHost1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- TabWidget의 id값이 반드시 "tabs"로 지정되어야 함. -->
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#424242" />
+
+            <!-- FrameLayout의 id값이 반드시 "tabcontent"로 지정되어야 함. -->
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- 첫 번째 페이지. content1 -->
+                <RelativeLayout
+                    android:id="@+id/content1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#fff">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="0.03"
+                        android:background="#e0e0e0"
+                        android:paddingTop="10dp"
+                        android:orientation="horizontal"
+                        android:id="@+id/title1">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:focusable="false"
+                            android:inputType="none"
+                            android:selectAllOnFocus="false"
+                            android:text="주변 혜택 목록"
+                            android:textColor="#000000"
+                            android:background="@android:color/transparent"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout"
+                        android:background="#f5f5f5"
+                        android:layout_below="@id/title1"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="현위치 :"
+                            android:paddingRight="10dp"/>
+
+                        <TextView
+                            android:id="@+id/curruent_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+
+                        <Button
+                            android:id="@+id/refresh"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="refreshData"
+                            android:text="데이터 갱신" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@id/linear_layout"
+                        android:background="#e0e0e0"/>
+
+                    <ListView
+                        android:id="@+id/list"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:layout_below="@id/line">
+
+
+                    </ListView>
+
+                </RelativeLayout>
+
+                <!-- 두 번째 페이지. content2 -->
+                <RelativeLayout
+                    android:id="@+id/content2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="0.03"
+                        android:background="#e0e0e0"
+                        android:paddingTop="10dp"
+                        android:orientation="horizontal"
+                        android:id="@+id/title2">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:focusable="false"
+                            android:inputType="none"
+                            android:selectAllOnFocus="false"
+                            android:text="주변 혜택 위치"
+                            android:textColor="#000000"
+                            android:background="@android:color/transparent"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:id="@+id/mainFragment"
+                        android:layout_below="@id/title2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </FrameLayout>
+
+                </RelativeLayout>
+
+                <!-- 세 번째 페이지. content3 -->
+                <RelativeLayout
+                    android:id="@+id/content3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="0.03"
+                        android:background="#e0e0e0"
+                        android:paddingTop="10dp"
+                        android:orientation="horizontal"
+                        android:id="@+id/title3">
+
+                        <EditText
+                            android:id="@+id/editText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:focusable="false"
+                            android:inputType="none"
+                            android:selectAllOnFocus="false"
+                            android:text="군인 혜택 업체 정보 등록"
+                            android:textColor="#000000"
+                            android:background="@android:color/transparent"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+                    <WebView
+                        android:id = "@+id/webView1"
+                        android:layout_below="@id/title3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </RelativeLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+</LinearLayout>
+
